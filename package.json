@@ -1,0 +1,15 @@
+{
+  "name": "ant-hono-demo",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "start": "ant src/index.ts",
+    "start:plain": "ant src/server.ts",
+    "compile": "mkdir -p dist && ant compile -o dist/server src/server.ts",
+    "bench": "hyperfine -N --warmup 10 --runs 100 'ant bench-coldstart.js' 'bun bench-coldstart.js' 'node bench-coldstart.js'"
+  },
+  "dependencies": {
+    "hono": "^4.13.2",
+    "@ant/hono": "^0.0.4"
+  }
+}
