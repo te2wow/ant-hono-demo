@@ -52,7 +52,7 @@ ant run bench          # hyperfine が必要
 
 ## 触っていて分かったこと
 
-- `Sandbox` の `memory` は API 上 64mb から受け付けるが、この環境で実際にゲストが起動したのは 128mb 以上だった。既定値（256MiB）に任せるのが無難
+- `Sandbox` の `memory` は API 上 64mb から受け付けるが、この環境で安定して起動したのは 112mb 以上だった（64mb・80mb は SandboxTimeout）。既定値（256MiB）に任せるのが無難
 - `Sandbox#eval` に Promise を返すと await されずに inspect 文字列が返る。`export default await ...` の形にする
 - CPU 制限に達した `Sandbox` は `close()` も同じエラーで reject する。後始末は `terminate()` を使う
 - `export default { fetch: app.fetch }` と書くと、`.ts` ファイルに限って `app` が未定義になる。`(req, ctx) => app.fetch(req, ctx)` と関数式で包むと動く

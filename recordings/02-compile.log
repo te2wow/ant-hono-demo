@@ -1,0 +1,22 @@
+$ ant compile -o dist/server src/server.ts
+Compiled dist/server
+33 modules, 80 KB embedded, 7652 KB total
+$ ls -lh dist/server
+-rwxr-xr-x@ 1 teppei0717  staff   7.5M  8月 18 11:12 dist/server
+
+$ cp dist/server /tmp/standalone/ && cd /tmp/standalone && ls -la
+total 15376
+drwxr-xr-x@   3 teppei0717  wheel       96  8月 18 11:08 .
+drwxrwxrwt  152 root        wheel     4864  8月 18 11:12 ..
+-rwxr-xr-x@   1 teppei0717  wheel  7869712  8月 18 11:12 server
+$ ./server &
+$ curl -s -w '\n' localhost:8080/json
+{"runtime":"ant","version":"14.0.ff84a70d.0","target":"arm64-apple-darwin24.6.0"}
+$ bun ws-client.ts
+received: echo: hello ant
+$ otool -L server
+server:
+	/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1351.0.0)
+	/System/Library/Frameworks/Security.framework/Versions/A/Security (compatibility version 1.0.0, current version 61439.120.27)
+	/System/Library/Frameworks/CoreFoundation.framework/Versions/A/CoreFoundation (compatibility version 150.0.0, current version 3502.1.255)
+	/usr/lib/libc++.1.dylib (compatibility version 1.0.0, current version 1900.180.0)

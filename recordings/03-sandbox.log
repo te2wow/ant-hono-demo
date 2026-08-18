@@ -1,0 +1,14 @@
+$ ant src/index.ts &
+$ curl -s -w '\n' -X POST localhost:8080/run -d '{"code":"return [1,2,3].map(n => n * 2)"}'
+{"ok":true,"result":"[ 2, 4, 6 ]","stats":{"cpuTimeMs":16.162,"wallTimeMs":21.161,"residentMemory":28397568}}
+$ curl -s -w '\n' -X POST localhost:8080/run -d '{"code":"while (true) {}"}'
+{"ok":false,"error":"SandboxCpuTimeLimit","message":"sandbox VM exceeded its CPU time budget"}
+$ curl -s -w '\n' -X POST localhost:8080/run -d '{"code":"const fs = await import(\"ant:fs\"); return fs.readFile(\"/etc/hosts\").catch(e => e.message)"}'
+{"ok":true,"result":"no such file or directory","stats":{"cpuTimeMs":15.102,"wallTimeMs":26.973,"residentMemory":30265344}}
+--- server log ---
+<-- POST /run
+--> POST /run 200 33ms
+<-- POST /run
+--> POST /run 400 217ms
+<-- POST /run
+--> POST /run 200 40ms
